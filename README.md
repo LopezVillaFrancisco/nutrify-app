@@ -144,7 +144,8 @@ GitHub Actions ([`ci.yml`](.github/workflows/ci.yml)) corre los tests del backen
 ## Estructura
 
 ```
-frontend/   Next.js: pantallas, componentes y lib/api.ts (cliente del backend)backend/    Spring Boot
+frontend/   Next.js: pantallas, componentes y lib/api.ts (cliente del backend)
+backend/    Spring Boot
   nutrition/  cálculo de comida: parser, base, traductor, USDA, Gemini
   data/       repositorios JDBC por área (perfil, comidas, actividad, gym)
   web/        controllers REST, errores y validación
