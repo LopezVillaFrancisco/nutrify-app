@@ -6,6 +6,17 @@ Tracker de comida, agua, pasos, peso y gym. Escribís lo que comiste en texto li
 **Backend:** Java 21 + Spring Boot 4 + JDBC + Spring Security (JWT)
 **Base y login:** Supabase (Postgres 17 con Row Level Security + Auth)
 
+<p>
+  <img src="docs/screenshots/01-hoy.png" width="200" alt="Hoy: calorías, macros, agua y pasos del día">
+  <img src="docs/screenshots/03-anotar-calculado.png" width="200" alt="Anotar: texto libre calculado por línea">
+  <img src="docs/screenshots/05-gym.png" width="200" alt="Gym: entreno del día, semana y rutinas">
+  <img src="docs/screenshots/07-progreso.png" width="200" alt="Progreso: semana, peso y gym">
+</p>
+
+<img src="docs/screenshots/09-hoy-escritorio.png" width="820" alt="Hoy en escritorio">
+
+Más capturas en [`docs/screenshots`](docs/screenshots).
+
 ## Arquitectura
 
 ```mermaid
@@ -133,8 +144,7 @@ GitHub Actions ([`ci.yml`](.github/workflows/ci.yml)) corre los tests del backen
 ## Estructura
 
 ```
-frontend/   Next.js: pantallas, componentes y lib/api.ts (cliente del backend)
-backend/    Spring Boot
+frontend/   Next.js: pantallas, componentes y lib/api.ts (cliente del backend)backend/    Spring Boot
   nutrition/  cálculo de comida: parser, base, traductor, USDA, Gemini
   data/       repositorios JDBC por área (perfil, comidas, actividad, gym)
   web/        controllers REST, errores y validación
