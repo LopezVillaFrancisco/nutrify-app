@@ -1,0 +1,13 @@
+# Secretos
+.env
+.env*.local
+
+# Java
+backend/target/
+
+# Editores y sistema
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db

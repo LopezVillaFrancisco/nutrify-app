@@ -1,0 +1,504 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+    background: #f6f3c8;
+  }
+  body {
+    color: #14322a;
+    overscroll-behavior-y: none;
+  }
+  /* 16px en campos: evita el zoom automático al enfocar en móviles */
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+  :focus-visible {
+    outline: 2px solid #1f9d6b;
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 1ms !important;
+      transition-duration: 1ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Fondo de toda la app */
+  .app-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(165deg, #f6f3c8 0%, #cdebd3 52%, #a8d8d4 100%);
+  }
+
+  /* Degradé de acento mango → menta */
+  .grad-v {
+    background: linear-gradient(180deg, #f0a22e, #1f9d6b);
+  }
+  .grad-d {
+    background: linear-gradient(135deg, #f0a22e, #1f9d6b);
+  }
+
+  /* Tarjeta de vidrio */
+  .glass {
+    background: rgba(255, 255, 255, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    border-radius: 22px;
+    box-shadow: 0 8px 24px rgba(18, 104, 74, 0.12);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  /* Pastilla de vidrio */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 44px;
+    padding: 0 18px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 0 8px 24px rgba(18, 104, 74, 0.12);
+    font-size: 15px;
+    font-weight: 600;
+    color: #14322a;
+    white-space: nowrap;
+    transition: transform 120ms ease, background-color 120ms ease;
+  }
+  .pill:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+  .pill:disabled {
+    opacity: 0.55;
+  }
+
+  /* Botón primario: degradé de acento, texto oscuro (nunca blanco sobre el degradé) */
+  .btn-accent {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 52px;
+    padding: 0 22px;
+    border-radius: 18px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #14322a;
+    background: linear-gradient(135deg, #f0a22e, #1f9d6b);
+    box-shadow: 0 8px 20px rgba(31, 157, 107, 0.4);
+    transition: transform 120ms ease, opacity 120ms ease;
+  }
+  .btn-accent:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+  .btn-accent:disabled {
+    opacity: 0.5;
+    box-shadow: none;
+  }
+
+  /* Botón secundario de vidrio, mismo alto que el primario */
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    padding: 0 20px;
+    border-radius: 18px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #14322a;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+  }
+
+  .input {
+    display: block;
+    width: 100%;
+    min-height: 52px;
+    border-radius: 16px;
+    padding: 13px 16px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1.5px solid rgba(255, 255, 255, 0.95);
+    color: #14322a;
+    font-weight: 500;
+    outline: none;
+    transition: border-color 120ms ease, box-shadow 120ms ease;
+  }
+  .input::placeholder {
+    color: #3f5f55;
+    opacity: 0.55;
+  }
+  .input:focus {
+    border-color: #1f9d6b;
+    box-shadow: 0 0 0 3px rgba(31, 157, 107, 0.18);
+  }
+  .input[aria-invalid="true"] {
+    border-color: #f0a22e;
+  }
+
+  .label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #3f5f55;
+  }
+
+  /* Etiqueta de origen: guardado / base / revisar */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    height: 22px;
+    padding: 0 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.8);
+    color: #3f5f55;
+  }
+  .tag-review {
+    background: rgba(240, 162, 46, 0.2);
+    color: #12684a;
+    font-weight: 800;
+  }
+
+  /* Espacios seguros (barra de gestos de Android / notch) */
+  .pt-safe {
+    padding-top: max(20px, env(safe-area-inset-top));
+  }
+  .pb-safe {
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+  }
+}
+
+@layer utilities {
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .animate-sheet {
+    animation: sheet-in 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .animate-fade {
+    animation: fade-in 180ms ease-out;
+  }
+  .animate-toast {
+    animation: toast-in 420ms cubic-bezier(0.2, 0.9, 0.25, 1.25);
+  }
+  .animate-toast-out {
+    animation: toast-out 200ms ease-in forwards;
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes toast-out {
+  to {
+    opacity: 0;
+    transform: translateY(14px) scale(0.96);
+  }
+}
+
+/* Barra de progreso al cambiar de pantalla */
+.nav-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 70;
+  height: 3px;
+  width: 100%;
+  transform-origin: left;
+  background: linear-gradient(90deg, #f0a22e, #1f9d6b);
+  border-radius: 0 3px 3px 0;
+  animation: nav-progress 1.6s cubic-bezier(0.1, 0.7, 0.3, 1) forwards;
+}
+@keyframes nav-progress {
+  from {
+    transform: scaleX(0.05);
+  }
+  to {
+    transform: scaleX(0.85);
+  }
+}
+
+/* En escritorio las hojas inferiores se abren como ventana centrada */
+@media (min-width: 768px) {
+  .animate-sheet {
+    animation: pop-in 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+}
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- Anotar: entradas, carga y IA ---------- */
+.animate-rise {
+  animation: rise 380ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animate-pop {
+  animation: pop-in 240ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+/* brillo que recorre un bloque mientras carga */
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.75), transparent);
+  animation: shimmer 1.3s ease-in-out infinite;
+}
+@keyframes shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+/* barra de progreso indeterminada con los colores de la app */
+.calc-bar {
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #f0a22e, #1f9d6b, #f0a22e);
+  background-size: 200% 100%;
+  animation: calc-bar 1.2s linear infinite;
+}
+@keyframes calc-bar {
+  to {
+    background-position: -200% 0;
+  }
+}
+.dot-pulse > span {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin-left: 3px;
+  border-radius: 999px;
+  background: currentColor;
+  animation: dot 1s ease-in-out infinite;
+}
+.dot-pulse > span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.dot-pulse > span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+@keyframes dot {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+/* borde con degradé (aviso de IA) */
+.grad-border {
+  border: 1.5px solid transparent;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.82)) padding-box,
+    linear-gradient(120deg, #f0a22e, #1f9d6b) border-box;
+}
+
+/* Gráficos: la línea aparece suave (sin cortar el trazo) */
+.chart-draw {
+  animation: fade-in 450ms ease-out both;
+}
+/* Gym: marcar una serie */
+.animate-check {
+  animation: check-pop 320ms cubic-bezier(0.2, 0.9, 0.3, 1.4);
+}
+@keyframes check-pop {
+  0% {
+    transform: scale(0.8);
+  }
+  60% {
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ---------- Feedback al sumar cosas ---------- */
+/* Aviso: el ícono entra con rebote y el check se dibuja */
+.toast-badge {
+  animation: badge-pop 480ms cubic-bezier(0.2, 0.9, 0.3, 1.5) 80ms both;
+}
+@keyframes badge-pop {
+  from {
+    transform: scale(0.3) rotate(-25deg);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+.toast-check {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  animation: draw 380ms ease-out 260ms forwards;
+}
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.toast-timer {
+  background: linear-gradient(90deg, #f0a22e, #1f9d6b);
+  animation: timer linear forwards;
+}
+@keyframes timer {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+/* Lo recién agregado brilla un momento */
+.animate-highlight {
+  animation: highlight 1400ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+@keyframes highlight {
+  0% {
+    transform: scale(0.97);
+    box-shadow: 0 0 0 0 rgba(31, 157, 107, 0.55);
+  }
+  25% {
+    transform: scale(1.015);
+    box-shadow: 0 0 0 6px rgba(31, 157, 107, 0.28);
+  }
+  100% {
+    transform: none;
+    box-shadow: 0 0 0 14px rgba(31, 157, 107, 0);
+  }
+}
+
+/* Anillo de calorías: late suave al sumar */
+.ring-pulse {
+  animation: ring-pulse 700ms cubic-bezier(0.2, 0.9, 0.3, 1.3);
+}
+@keyframes ring-pulse {
+  0% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0 rgba(240, 162, 46, 0));
+  }
+  35% {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 14px rgba(240, 162, 46, 0.55));
+  }
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0 rgba(240, 162, 46, 0));
+  }
+}
+
+/* Barras de progreso: llenado con rebote + un brillo que la recorre */
+.bar-fill {
+  position: relative;
+  overflow: hidden;
+  transition: width 750ms cubic-bezier(0.25, 1, 0.35, 1.08);
+}
+.bar-glint {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 20%, rgba(255, 255, 255, 0.85) 50%, transparent 80%);
+  transform: translateX(-100%);
+  animation: glint 900ms ease-out 150ms;
+}
+@keyframes glint {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* Botón que acaba de guardar */
+.btn-done {
+  animation: btn-done 520ms cubic-bezier(0.2, 0.9, 0.3, 1.4);
+}
+@keyframes btn-done {
+  0% {
+    transform: scale(0.94);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+  100% {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-highlight,
+  .ring-pulse,
+  .bar-glint,
+  .btn-done,
+  .toast-badge {
+    animation: none;
+  }
+  .toast-check {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+}
